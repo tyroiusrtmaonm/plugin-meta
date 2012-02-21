@@ -16,7 +16,7 @@ require_once DOKU_PLUGIN.'syntax.php';
  * All DokuWiki plugins to extend the parser/rendering mechanism
  * need to inherit from this class
  */
-class syntax_plugin_now extends DokuWiki_Syntax_Plugin {
+class syntax_plugin_meta extends DokuWiki_Syntax_Plugin {
  
     function getInfo() {
         return array('author' => 'me',
@@ -31,7 +31,7 @@ class syntax_plugin_now extends DokuWiki_Syntax_Plugin {
     function getSort() { return 32; }
  
     function connectTo($mode) {
-        $this->Lexer->addSpecialPattern('\[NOW\]',$mode,'plugin_now');
+        $this->Lexer->addSpecialPattern('~~META.*~~',$mode,'plugin_meta');
     }
  
     function handle($match, $state, $pos, &$handler) {
