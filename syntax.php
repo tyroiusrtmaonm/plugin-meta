@@ -58,7 +58,7 @@ class syntax_plugin_meta extends DokuWiki_Syntax_Plugin {
     function render($mode, &$renderer, $data) {
         if ($mode == 'xthml') {
             return true; // don't output anything
-        } elseif ($mode == 'metadata') {
+        } /*elseif ($mode == 'metadata') {
 
             // do some validation / conversion for date metadata
             if (isset($data['date'])) {
@@ -96,7 +96,7 @@ class syntax_plugin_meta extends DokuWiki_Syntax_Plugin {
                     $renderer->meta[$key] = $value;
                 }
             }
-        }
+        }*/
     }
 
     /**
