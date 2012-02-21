@@ -31,7 +31,7 @@ class syntax_plugin_meta extends DokuWiki_Syntax_Plugin {
     function getSort() { return 32; }
  
     function connectTo($mode) {
-        $this->Lexer->addSpecialPattern('~~META.*~~',$mode,'plugin_meta');
+        $this->Lexer->addSpecialPattern('~~META:.*~~',$mode,'plugin_meta');
     }
  
     function handle($match, $state, $pos, &$handler) {
@@ -40,7 +40,8 @@ class syntax_plugin_meta extends DokuWiki_Syntax_Plugin {
  
     function render($mode, &$renderer, $data) {
         if($mode == 'xhtml'){
-            $renderer->doc .= date('r');
+            $META = p_get_metadata('start', 'date'); 
+            $renderer->doc .= date("F j, Y, g:i a", $META['modified']);
             return true;
         }
         return false;
