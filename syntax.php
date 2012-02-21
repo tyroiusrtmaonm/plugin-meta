@@ -47,7 +47,7 @@ class syntax_plugin_meta extends DokuWiki_Syntax_Plugin {
                 $renderer->doc .= date("F j, Y, g:i a", $META[$data[2]]);
             }
             elseif($data[1]=='last_change') {
-                $renderer->doc .= $META[$date[2]];
+                $renderer->doc .= $META[$data[2]];
             }
             else {
                 $renderer->doc .= $META;
