@@ -19,12 +19,12 @@ require_once DOKU_PLUGIN.'syntax.php';
 class syntax_plugin_meta extends DokuWiki_Syntax_Plugin {
  
     function getInfo() {
-        return array('author' => 'me',
-                     'email'  => 'me@someplace.com',
-                     'date'   => '2005-07-28',
-                     'name'   => 'Now Plugin',
-                     'desc'   => 'Include the current date and time',
-                     'url'    => 'http://www.dokuwiki.org/plugin:tutorial');
+        return array('author' => 'Tristan Rasmussen',
+                     'email'  => 'tristanr93@gmail.com',
+                     'date'   => '2012-02-21',
+                     'name'   => 'Meta Data Plugin',
+                     'desc'   => 'Include various meta data fields',
+                     'url'    => '');
     }
  
     function getType() { return 'substition'; }
@@ -35,8 +35,8 @@ class syntax_plugin_meta extends DokuWiki_Syntax_Plugin {
     }
  
     function handle($match, $state, $pos, &$handler) {
-        $match = substr($match,7,-2); //strip ~~INFO: from start and ~~ from end
-        $result = explode(' ', $match);
+        $match = substr($match,7,-2); //strip ~~META: from start and ~~ from end
+        $result = explode(' ', $match); //explode on spaces
         return $result;
     }
  

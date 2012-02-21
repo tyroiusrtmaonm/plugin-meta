@@ -1,7 +1,7 @@
 base meta
-author me
-email me@someplace.com
-date 2005-07-28
-name Meta Plugin
-desc Include the current date and time
-url http://www.dokuwiki.org/plugin:tutoril
+author Tristan Rasmussen
+email tristanr93@gmail.com
+date 2012-02-21
+name Meta Data Plugin
+desc Include various meta data fields
+url
