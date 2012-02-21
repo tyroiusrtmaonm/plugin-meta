@@ -1,127 +1,199 @@
 <?php
 /**
- * Meta Plugin: Sets metadata for the current page
+ * Plugin Skeleton: Displays "Hello World!"
+ *
+ * Syntax: <TEST> - will be replaced with "Hello World!"
  * 
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author     Esther Brunner <wikidesign@gmail.com>
+ * @author     Christopher Smith <chris@jalakai.co.uk>
  */
+ 
 if(!defined('DOKU_INC')) define('DOKU_INC',realpath(dirname(__FILE__).'/../../').'/');
 if(!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 require_once(DOKU_PLUGIN.'syntax.php');
-
+ 
 /**
  * All DokuWiki plugins to extend the parser/rendering mechanism
  * need to inherit from this class
  */
-class syntax_plugin_meta extends DokuWiki_Syntax_Plugin {
-
-    /**
-     * return some info
-     */
-    function getInfo() {
+class syntax_plugin_test extends DokuWiki_Syntax_Plugin {
+ 
+   /**
+    * Get an associative array with plugin info.
+    *
+    * <p>
+    * The returned array holds the following fields:
+    * <dl>
+    * <dt>author</dt><dd>Author of the plugin</dd>
+    * <dt>email</dt><dd>Email address to contact the author</dd>
+    * <dt>date</dt><dd>Last modified date of the plugin in
+    * <tt>YYYY-MM-DD</tt> format</dd>
+    * <dt>name</dt><dd>Name of the plugin</dd>
+    * <dt>desc</dt><dd>Short description of the plugin (Text only)</dd>
+    * <dt>url</dt><dd>Website with more information on the plugin
+    * (eg. syntax description)</dd>
+    * </dl>
+    * @param none
+    * @return Array Information about this plugin class.
+    * @public
+    * @static
+    */
+    function getInfo(){
         return array(
-                'author' => 'Esther Brunner',
-                'email'  => 'wikidesign@gmail.com',
-                'date'   => '2006-04-15',
-                'name'   => 'Meta Plugin',
-                'desc'   => 'Sets metadata for the current page',
-                'url'    => 'http://wiki.splitbrain.org/plugin:meta',
-                );
+            'author' => 'me',
+            'email'  => 'me@somewhere.com',
+            'date'   => '20yy-mm-dd',
+            'name'   => 'Test Plugin',
+            'desc'   => 'Testing 1, 2, 3 ...',
+            'url'    => 'http://www.dokuwiki.org/plugin:test',
+        );
     }
-
-    function getType() { return 'substition'; }
-    function getSort() { return 99; }
-    function connectTo($mode) { $this->Lexer->addSpecialPattern('~~META:.*?~~',$mode,'plugin_meta');}
-
-    /**
-     * Handle the match
-     */
-    function handle($match, $state, $pos, &$handler) {
-        $match = substr($match,7,-2); //strip ~~META: from start and ~~ from end
-
-        return $match;
+ 
+   /**
+    * Get the type of syntax this plugin defines.
+    *
+    * @param none
+    * @return String <tt>'substition'</tt> (i.e. 'substitution').
+    * @public
+    * @static
+    */
+    function getType(){
+        return 'substition';
     }
-
+ 
     /**
-     * Create output
+     * What kind of syntax do we allow (optional)
      */
+//    function getAllowedTypes() {
+//        return array();
+//    }
+ 
+   /**
+    * Define how this plugin is handled regarding paragraphs.
+    *
+    * <p>
+    * This method is important for correct XHTML nesting. It returns
+    * one of the following values:
+    * </p>
+    * <dl>
+    * <dt>normal</dt><dd>The plugin can be used inside paragraphs.</dd>
+    * <dt>block</dt><dd>Open paragraphs need to be closed before
+    * plugin output.</dd>
+    * <dt>stack</dt><dd>Special case: Plugin wraps other paragraphs.</dd>
+    * </dl>
+    * @param none
+    * @return String <tt>'block'</tt>.
+    * @public
+    * @static
+    */
+//    function getPType(){
+//        return 'normal';
+//    }
+ 
+   /**
+    * Where to sort in?
+    *
+    * @param none
+    * @return Integer <tt>6</tt>.
+    * @public
+    * @static
+    */
+    function getSort(){
+        return 999;
+    }
+ 
+ 
+   /**
+    * Connect lookup pattern to lexer.
+    *
+    * @param $aMode String The desired rendermode.
+    * @return none
+    * @public
+    * @see render()
+    */
+    function connectTo($mode) {
+      $this->Lexer->addSpecialPattern('<TEST>',$mode,'plugin_test');
+//      $this->Lexer->addEntryPattern('<TEST>',$mode,'plugin_test');
+    }
+ 
+//    function postConnect() {
+//      $this->Lexer->addExitPattern('</TEST>','plugin_test');
+//    }
+ 
+ 
+   /**
+    * Handler to prepare matched data for the rendering process.
+    *
+    * <p>
+    * The <tt>$aState</tt> parameter gives the type of pattern
+    * which triggered the call to this method:
+    * </p>
+    * <dl>
+    * <dt>DOKU_LEXER_ENTER</dt>
+    * <dd>a pattern set by <tt>addEntryPattern()</tt></dd>
+    * <dt>DOKU_LEXER_MATCHED</dt>
+    * <dd>a pattern set by <tt>addPattern()</tt></dd>
+    * <dt>DOKU_LEXER_EXIT</dt>
+    * <dd> a pattern set by <tt>addExitPattern()</tt></dd>
+    * <dt>DOKU_LEXER_SPECIAL</dt>
+    * <dd>a pattern set by <tt>addSpecialPattern()</tt></dd>
+    * <dt>DOKU_LEXER_UNMATCHED</dt>
+    * <dd>ordinary text encountered within the plugin's syntax mode
+    * which doesn't match any pattern.</dd>
+    * </dl>
+    * @param $aMatch String The text matched by the patterns.
+    * @param $aState Integer The lexer state for the match.
+    * @param $aPos Integer The character position of the matched text.
+    * @param $aHandler Object Reference to the Doku_Handler object.
+    * @return Integer The current lexer state for the match.
+    * @public
+    * @see render()
+    * @static
+    */
+    function handle($match, $state, $pos, &$handler){
+        switch ($state) {
+          case DOKU_LEXER_ENTER : 
+            break;
+          case DOKU_LEXER_MATCHED :
+            break;
+          case DOKU_LEXER_UNMATCHED :
+            break;
+          case DOKU_LEXER_EXIT :
+            break;
+          case DOKU_LEXER_SPECIAL :
+            break;
+        }
+        return array();
+    }
+ 
+   /**
+    * Handle the actual output creation.
+    *
+    * <p>
+    * The method checks for the given <tt>$aFormat</tt> and returns
+    * <tt>FALSE</tt> when a format isn't supported. <tt>$aRenderer</tt>
+    * contains a reference to the renderer object which is currently
+    * handling the rendering. The contents of <tt>$aData</tt> is the
+    * return value of the <tt>handle()</tt> method.
+    * </p>
+    * @param $aFormat String The output format to generate.
+    * @param $aRenderer Object A reference to the renderer object.
+    * @param $aData Array The data created by the <tt>handle()</tt>
+    * method.
+    * @return Boolean <tt>TRUE</tt> if rendered successfully, or
+    * <tt>FALSE</tt> otherwise.
+    * @public
+    * @see handle()
+    */
     function render($mode, &$renderer, $data) {
-        if ($mode == 'xthml') {
-            $renderer->doc .= getVersion();
-            return true; // don't output anything
+        if($mode == 'xhtml'){
+            $renderer->doc .= "Hello World!";            // ptype = 'normal'
+//            $renderer->doc .= "<p>Hello World!</p>";     // ptype = 'block'
+            return true;
         }
         return false;
     }
-
-    /**
-     * converts YYYY-MM-DD[ hh:mm:ss][ -> [YYYY-MM-DD ]hh:mm:ss] to PHP timestamps
-     */
-    function _convertDate($date) {
-        list($start, $end) = explode('->', $date, 2);
-
-        // single date
-        if (!$end) {
-            list($date, $time) = explode(' ', trim($start), 2);
-            if (!preg_match('/\d{4}\-\d{2}\-\d{2}/', $date)) return false;
-            $time = $this->_autocompleteTime($time);
-            return strtotime($date.' '.$time);
-
-            // duration
-        } else {
-
-            // start
-            list($startdate, $starttime) = explode(' ', trim($start), 2);
-            $startdate = $this->_autocompleteDate($startdate);
-            if (!$startdate) return false;
-            $starttime = $this->_autocompleteTime($starttime);
-
-            // end
-            list($enddate, $endtime) = explode(' ', trim($end), 2);
-            if (!trim($endtime)) { // only time given
-                $end_date = $this->_autocompleteDate($enddate, true);
-                if (!$end_date) {
-                    $endtime = $this->_autocompleteTime($enddate, true);
-                    $enddate = $startdate;
-                } else {            // only date given
-                    $enddate = $end_date;
-                    $endtime = '23:59:59';
-                }
-            } else {
-                $enddate = $this->_autocompleteDate($enddate, true);
-                if (!$enddate) $enddate = $startdate;
-                $endtime = $this->_autocompleteTime($endtime, true);
-            }
-
-            $start = strtotime($startdate.' '.$starttime);
-            $end   = strtotime($enddate.' '.$endtime);
-            if (!$start || !$end) return false;
-            return array('start' => $start, 'end' => $end);
-        }
-    }
-
-    function _autocompleteDate($date, $end=false) {
-        if (!preg_match('/^\d{4}\-\d{2}\-\d{2}$/', $date)) {
-            if (preg_match('/^\d{4}\-\d{2}$/', $date))
-                // we don't know which month
-                return ($end) ? $date.'-28' : $date.'-01';
-            elseif (preg_match('/^\d{4}$/', $date))
-                return ($end) ? $date.'-12-31' : $date.'-01-01';
-            else return false;
-        } else {
-            return $date;
-        }
-    }
-
-    function _autocompleteTime($time, $end=false) {
-        if (!preg_match('/^\d{2}:\d{2}:\d{2}$/', $time)) {
-            if (preg_match('/^\d{2}:\d{2}$/', $time))
-                return ($end) ? $time.':59' : $time.':00';
-            elseif (preg_match('/^\d{2}$/', $time))
-                return ($end) ? $time.':59:59': $time.':00:00';
-            else return ($end) ? '23:59:59' : '00:00:00';
-        } else {
-            return $time;
-        }
-    }
 }
-// vim:ts=4:sw=4:et:enc=utf-8:
+ 
+//Setup VIM: ex: et ts=4 enc=utf-8 :
+?>
