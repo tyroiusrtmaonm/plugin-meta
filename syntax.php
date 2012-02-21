@@ -35,12 +35,13 @@ class syntax_plugin_meta extends DokuWiki_Syntax_Plugin {
     }
  
     function handle($match, $state, $pos, &$handler) {
-        return array($match, $state, $pos);
+        $match = substr($match,7,-2); //strip ~~INFO: from start and ~~ from end
+        return array(strtolower($match));
     }
  
     function render($mode, &$renderer, $data) {
         if($mode == 'xhtml'){
-            $META = p_get_metadata('start', 'date'); 
+            $META = p_get_metadata($data[0], 'date'); 
             $renderer->doc .= date("F j, Y, g:i a", $META['modified']);
             return true;
         }
