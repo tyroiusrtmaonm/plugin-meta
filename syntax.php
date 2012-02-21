@@ -39,17 +39,7 @@ class syntax_plugin_meta extends DokuWiki_Syntax_Plugin {
     function handle($match, $state, $pos, &$handler) {
         $match = substr($match,7,-2); //strip ~~META: from start and ~~ from end
 
-        $data = array();
-        $pairs = explode('&', $match);
-        foreach ($pairs as $pair) {
-            list($key, $value) = explode('=', $pair, 2);
-            list($key, $subkey) = explode(' ', $key, 2);
-            if (trim($subkey)) $data[trim($key)][trim($subkey)] = trim($value);
-            else $data[trim($key)] = trim($value);
-        }
-        $data = array_change_key_case($data, CASE_LOWER);
-
-        return $data;
+        return $match;
     }
 
     /**
@@ -57,47 +47,10 @@ class syntax_plugin_meta extends DokuWiki_Syntax_Plugin {
      */
     function render($mode, &$renderer, $data) {
         if ($mode == 'xthml') {
-            $renderer->doc .= "some plugin output...";
+            $renderer->doc .= getVersion();
             return true; // don't output anything
-        } /*elseif ($mode == 'metadata') {
-
-            // do some validation / conversion for date metadata
-            if (isset($data['date'])) {
-                if (is_array($data['date'])) {
-                    foreach ($data['date'] as $key => $date) {
-                        $date = $this->_convertDate(trim($date));
-                        if (!$date) unset($data['date'][$key]);
-                        else $data['date'][$key] = $date;
-                    }
-                } else {
-                    unset($data['date']);
-                }
-            }
-
-            // now merge the arrays
-            $protected = array('description', 'date', 'contributor');
-            foreach ($data as $key => $value) {
-
-                // be careful with sub-arrays of $meta['relation']
-                if ($key == 'relation') {
-                    foreach ($value as $subkey => $subvalue) {
-                        $renderer->meta[$key][$subkey] =
-                            array_merge($renderer->meta[$key][$subkey], $subvalue);
-                    }
-
-                    // be careful with some senisitive arrays of $meta
-                } elseif (in_array($key, $protected)) {
-                    if (is_array($value)) {
-                        $renderer->meta[$key] =
-                            array_merge($renderer->meta[$key], $value);
-                    }
-
-                    // no special treatment for the rest
-                } else {
-                    $renderer->meta[$key] = $value;
-                }
-            }
-        }*/
+        }
+        return false;
     }
 
     /**
