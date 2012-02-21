@@ -36,14 +36,22 @@ class syntax_plugin_meta extends DokuWiki_Syntax_Plugin {
  
     function handle($match, $state, $pos, &$handler) {
         $match = substr($match,7,-2); //strip ~~INFO: from start and ~~ from end
-        $result = explode(' ', $match, 2);
+        $result = explode(' ', $match);
         return $result;
     }
  
     function render($mode, &$renderer, $data) {
         if($mode == 'xhtml'){
-            $META = p_get_metadata($data[0], $data[1]); 
-            $renderer->doc .= date("F j, Y, g:i a", $META['modified']);
+            $META = p_get_metadata($data[0], $data[1]);
+            if($data[1]=='date') {
+                $renderer->doc .= date("F j, Y, g:i a", $META[$date[2]]);
+            }
+            elseif($data[1]=='last_change') {
+                $renderer->doc .= $META[$date[2]];
+            }
+            else {
+                $renderer->doc .= $META;
+            }
             return true;
         }
         return false;
