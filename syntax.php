@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Now: Inserts a timestamp.
+ * Plugin Meta: Inserts meta data
  * 
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
- * @author     Christopher Smith <chris@jalakai.co.uk>
+ * @author     Tristan Rasmussen
  */
  
 // must be run within DokuWiki
@@ -31,7 +31,7 @@ class syntax_plugin_meta extends DokuWiki_Syntax_Plugin {
     function getSort() { return 32; }
  
     function connectTo($mode) {
-        $this->Lexer->addSpecialPattern('~~META:.*~~',$mode,'plugin_meta');
+        $this->Lexer->addSpecialPattern('~~META:[a-zA-z-_ ]*~~',$mode,'plugin_meta');
     }
  
     function handle($match, $state, $pos, &$handler) {
