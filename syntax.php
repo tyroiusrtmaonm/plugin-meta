@@ -31,7 +31,7 @@ class syntax_plugin_meta extends DokuWiki_Syntax_Plugin {
     function getSort() { return 32; }
  
     function connectTo($mode) {
-        $this->Lexer->addSpecialPattern('~~META:[a-zA-z-_ ]*~~',$mode,'plugin_meta');
+        $this->Lexer->addSpecialPattern('~~META:[a-zA-z/-/_1-9 ]*~~',$mode,'plugin_meta');
     }
  
     function handle($match, $state, $pos, &$handler) {
